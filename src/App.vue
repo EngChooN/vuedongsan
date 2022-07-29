@@ -2,12 +2,20 @@
   <!-- 모달창 -->
   <div class="black-bg" v-if="modalOpen === true">
     <div class="white-bg">
-      <h3>상품 제목입니다.</h3>
-      <p>상품 설명입니다.</p>
+      <h3>{{ products[clickValue].title }}</h3>
+      <p>{{ products[clickValue].content }}</p>
       <button v-on:click="modalOpen = false" class="modal-exit-btn">
         닫기
       </button>
     </div>
+  </div>
+
+  <div v-if="1 === 2">
+    <p>안녕하세요</p>
+  </div>
+
+  <div v-else>
+    <p>안녕못하세요</p>
   </div>
 
   <!-- 상품리스트 -->
@@ -16,10 +24,18 @@
   </div>
   <div v-for="(el, index) in products" :key="index">
     <img v-bind:src="el.image" class="room-img" />
-    <h4 v-on:click="modalOpen = true" class="product-name">{{ el.title }}</h4>
-    <p>{{ el.price }} 만원</p>
-    <button v-on:click="el.report++">허위매물신고</button>
-    <span>신고수: {{ el.report }}</span>
+    <h4
+      v-on:click="
+        modalOpen = true;
+        clickValue = index;
+      "
+      class="product-name"
+    >
+      {{ el.title }}
+    </h4>
+    <p>{{ el.price }} ₩</p>
+    <!-- <button v-on:click="el.report++">허위매물신고</button>
+    <span>신고수: {{ el.report }}</span> -->
   </div>
 </template>
 
@@ -33,6 +49,7 @@ export default {
       products,
       menus: ["Home", "Products", "About"],
       modalOpen: false,
+      clickValue: null,
     };
   },
   // 힘수저장함 (함수선언)
@@ -63,7 +80,7 @@ div {
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.432);
+  background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   padding: 20px;
 }
@@ -73,6 +90,14 @@ div {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
+}
+
+.modal-exit-btn {
+  margin-top: 30px;
+}
+
+.modal-exit-btn:hover {
+  cursor: pointer;
 }
 
 .menu {
@@ -97,13 +122,5 @@ div {
 
 .product-name:hover {
   text-decoration: underline;
-}
-
-.modal-exit-btn {
-  margin-top: 30px;
-}
-
-.modal-exit-btn:hover {
-  cursor: pointer;
 }
 </style>
