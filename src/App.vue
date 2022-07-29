@@ -4,6 +4,7 @@
   </div>
   <div v-for="(el, index) in products" :key="index">
     <h4>{{ el.name }}</h4>
+    <img v-bind:src="el.img" />
     <p>{{ el.price }} 만원</p>
     <button v-on:click="el.report++">허위매물신고</button>
     <span>신고수: {{ el.report }}</span>
@@ -18,19 +19,22 @@ export default {
     return {
       products: [
         {
-          name: "역삼동원룸",
+          name: "역삼동 원룸",
           price: 60,
           report: 0,
+          img: require("./assets/images/room0.jpg"),
         },
         {
-          name: "천호동원룸",
+          name: "천호동 원룸",
           price: 70,
           report: 0,
+          img: require("./assets/images/room1.jpg"),
         },
         {
-          name: "마포구원룸",
+          name: "마포구 원룸",
           price: 100,
           report: 0,
+          img: require("./assets/images/room2.jpg"),
         },
       ],
       menus: ["Home", "Products", "About"],
