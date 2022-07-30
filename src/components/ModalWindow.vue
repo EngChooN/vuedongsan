@@ -6,14 +6,14 @@
       <p>{{ products[clickValue].content }}</p>
       <p>{{ products[clickValue].price }} ₩</p>
       <DiscountBanner />
-      <!-- <button v-on:click="modalOpen = false" class="modal-exit-btn">
-        닫기
-      </button> -->
+      <button v-on:click="modalClose" class="modal-exit-btn">닫기</button>
     </div>
   </div>
 </template>
 
 <script>
+import DiscountBanner from "./DiscountBanner.vue";
+
 export default {
   name: "ModalWindow",
   props: {
@@ -24,7 +24,14 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    modalClose() {
+      this.$emit("openModal", false);
+    },
+  },
+  components: {
+    DiscountBanner: DiscountBanner,
+  },
 };
 </script>
 

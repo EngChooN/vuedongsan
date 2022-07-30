@@ -4,6 +4,7 @@
     :products="products"
     :modalOpen="modalOpen"
     :clickValue="clickValue"
+    @openModal="modalOpen = $event"
   />
   <!-- 헤더 -->
   <div class="menu">
@@ -12,27 +13,23 @@
   <!-- 배너 광고 -->
   <DiscountBanner />
   <!-- 상품리스트 -->
-  <div v-for="(el, index) in products" :key="index">
-    <img v-bind:src="el.image" class="room-img" />
-    <h4
-      v-on:click="
-        modalOpen = true;
-        clickValue = index;
-      "
-      class="product-name"
-    >
-      {{ el.title }}
-    </h4>
-    <p>{{ el.price }} ₩</p>
-    <!-- <button v-on:click="el.report++">허위매물신고</button>
-    <span>신고수: {{ el.report }}</span> -->
-  </div>
+  <ProductCard
+    v-for="(el, index) in products"
+    :key="index"
+    :el="el"
+    :openModal="openModal"
+    @openModal="
+      modalOpen = true;
+      clickValue = $event;
+    "
+  />
 </template>
 
 <script>
 import products from "./assets/data";
 import DiscountBanner from "./components/DiscountBanner.vue";
 import ModalWindow from "./components/ModalWindow.vue";
+import ProductCard from "./components/ProductCard.vue";
 
 export default {
   name: "App",
@@ -50,6 +47,7 @@ export default {
   components: {
     DiscountBanner: DiscountBanner,
     ModalWindow: ModalWindow,
+    ProductCard: ProductCard,
   },
 };
 </script>
@@ -100,7 +98,6 @@ div {
 .menu {
   background: darkslateblue;
   padding: 20px;
-  /* border-radius: 5px; */
 }
 
 .menu a {
