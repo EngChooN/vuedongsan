@@ -1,27 +1,17 @@
 <template>
   <!-- 모달창 -->
-  <div class="black-bg" v-if="modalOpen === true">
-    <div class="white-bg">
-      <h3>{{ products[clickValue].title }}</h3>
-      <p>{{ products[clickValue].content }}</p>
-      <button v-on:click="modalOpen = false" class="modal-exit-btn">
-        닫기
-      </button>
-    </div>
-  </div>
-
-  <div v-if="1 === 2">
-    <p>안녕하세요</p>
-  </div>
-
-  <div v-else>
-    <p>안녕못하세요</p>
-  </div>
-
-  <!-- 상품리스트 -->
+  <ModalWindow
+    :products="products"
+    :modalOpen="modalOpen"
+    :clickValue="clickValue"
+  />
+  <!-- 헤더 -->
   <div class="menu">
     <a v-for="(el, index) in menus" :key="index">{{ el }}</a>
   </div>
+  <!-- 배너 광고 -->
+  <DiscountBanner />
+  <!-- 상품리스트 -->
   <div v-for="(el, index) in products" :key="index">
     <img v-bind:src="el.image" class="room-img" />
     <h4
@@ -41,6 +31,9 @@
 
 <script>
 import products from "./assets/data";
+import DiscountBanner from "./components/DiscountBanner.vue";
+import ModalWindow from "./components/ModalWindow.vue";
+
 export default {
   name: "App",
   // 데이터 저장함 (변수선언)
@@ -49,12 +42,15 @@ export default {
       products,
       menus: ["Home", "Products", "About"],
       modalOpen: false,
-      clickValue: null,
+      clickValue: 0,
     };
   },
   // 힘수저장함 (함수선언)
   methods: {},
-  components: {},
+  components: {
+    DiscountBanner: DiscountBanner,
+    ModalWindow: ModalWindow,
+  },
 };
 </script>
 
@@ -78,6 +74,7 @@ div {
 .black-bg {
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
@@ -86,7 +83,7 @@ div {
 }
 
 .white-bg {
-  width: 100%;
+  width: 400px;
   background-color: white;
   padding: 20px;
   border-radius: 8px;
@@ -102,7 +99,7 @@ div {
 
 .menu {
   background: darkslateblue;
-  padding: 15px;
+  padding: 20px;
   /* border-radius: 5px; */
 }
 
@@ -122,5 +119,10 @@ div {
 
 .product-name:hover {
   text-decoration: underline;
+}
+
+.discount {
+  background: #eee;
+  padding: 10px;
 }
 </style>
