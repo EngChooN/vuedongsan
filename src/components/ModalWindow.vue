@@ -4,7 +4,10 @@
       <img :src="products[clickValue].image" class="room-img" />
       <h3>{{ products[clickValue].title }}</h3>
       <p>{{ products[clickValue].content }}</p>
-      <p>{{ products[clickValue].price }} ₩</p>
+      <input @input="month = $event.target.value" />
+      <p>
+        총 {{ month || 0 }} 개월 : {{ products[clickValue].price * month }} ₩
+      </p>
       <DiscountBanner />
       <button v-on:click="modalClose" class="modal-exit-btn">닫기</button>
     </div>
@@ -22,7 +25,9 @@ export default {
     modalOpen: Boolean,
   },
   data() {
-    return {};
+    return {
+      month: 0,
+    };
   },
   methods: {
     modalClose() {
