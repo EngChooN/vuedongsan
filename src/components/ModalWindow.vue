@@ -4,7 +4,11 @@
       <img :src="products[clickValue].image" class="room-img" />
       <h3>{{ products[clickValue].title }}</h3>
       <p>{{ products[clickValue].content }}</p>
-      <input @input="month = $event.target.value" />
+
+      <!-- 같은 코드임! -->
+      <!-- <input @input="month = $event.target.value" /> -->
+      <input v-model="month" />
+
       <p>
         총 {{ month || 0 }} 개월 : {{ products[clickValue].price * month }} ₩
       </p>
@@ -26,8 +30,25 @@ export default {
   },
   data() {
     return {
-      month: 0,
+      month: 1,
     };
+  },
+  watch: {
+    month(value) {
+      // 숫자를 입력했는지
+      if (isNaN(value)) {
+        alert("숫자를 입력해 주세요!");
+        this.month = 1;
+        return;
+      }
+
+      // 입력값이 12이상인지
+      if (value > 12) {
+        alert("최대 12개월 입니다!");
+        this.month = 1;
+        return;
+      }
+    },
   },
   methods: {
     modalClose() {
