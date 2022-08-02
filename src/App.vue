@@ -10,7 +10,7 @@
   <div class="menu">
     <a v-for="(el, index) in menus" :key="index">{{ el }}</a>
   </div>
-  <!-- 배너 광고 -->
+  <!-- 배너광고 -->
   <DiscountBanner />
   <!-- 상품리스트 -->
   <ProductCard
