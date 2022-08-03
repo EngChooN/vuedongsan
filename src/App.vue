@@ -1,11 +1,25 @@
 <template>
   <!-- 모달창 -->
-  <ModalWindow
-    :products="products"
-    :modalOpen="modalOpen"
-    :clickValue="clickValue"
-    @openModal="modalOpen = $event"
-  />
+  <!-- 애니메이션 -->
+  <!-- <div class="start" :class="{ end: modalOpen }">
+    <ModalWindow
+      :products="products"
+      :modalOpen="modalOpen"
+      :clickValue="clickValue"
+      @openModal="modalOpen = $event"
+    />
+  </div> -->
+
+  <!-- 뷰의 애니메이션 -->
+  <transition name="fade">
+    <ModalWindow
+      :products="products"
+      :modalOpen="modalOpen"
+      :clickValue="clickValue"
+      @openModal="modalOpen = $event"
+    />
+  </transition>
+
   <!-- 헤더 -->
   <div class="menu">
     <a v-for="(el, index) in menus" :key="index">{{ el }}</a>
@@ -121,5 +135,41 @@ div {
 .discount {
   background: #eee;
   padding: 10px;
+}
+
+.start {
+  opacity: 0;
+  transition: all 0.3s;
+}
+.end {
+  opacity: 1;
+}
+
+/* 입장 애니메이션 */
+/* 시작 스타일 */
+.fade-enter-from {
+  opacity: 0;
+}
+/* transition */
+.fade-enter-active {
+  transition: all 0.3s;
+}
+/* 끝 스타일 */
+.fade-enter-to {
+  opacity: 1;
+}
+
+/* 퇴장 애니메이션 */
+/* 시작 스타일 */
+.fade-leave-from {
+  opacity: 1;
+}
+/* transition */
+.fade-leave-active {
+  transition: all 0.3s;
+}
+/* 끝 스타일 */
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
