@@ -1,16 +1,5 @@
 <template>
-  <!-- 모달창 -->
-  <!-- 애니메이션 -->
-  <!-- <div class="start" :class="{ end: modalOpen }">
-    <ModalWindow
-      :products="products"
-      :modalOpen="modalOpen"
-      :clickValue="clickValue"
-      @openModal="modalOpen = $event"
-    />
-  </div> -->
-
-  <!-- 뷰의 애니메이션 -->
+  <!-- 모달창 (애니메이션) -->
   <transition name="fade">
     <ModalWindow
       :products="products"
@@ -26,6 +15,9 @@
   </div>
   <!-- 배너광고 -->
   <DiscountBanner />
+  <!-- 정렬버튼 -->
+  <button @click="priceSortClick">가격순</button>
+  <button @click="backSortClick">되돌리기</button>
   <!-- 상품리스트 -->
   <ProductCard
     v-for="(el, index) in products"
@@ -44,12 +36,16 @@ import products from "./assets/data";
 import DiscountBanner from "./components/DiscountBanner.vue";
 import ModalWindow from "./components/ModalWindow.vue";
 import ProductCard from "./components/ProductCard.vue";
+import data from "./assets/data";
 
 export default {
   name: "App",
   // 데이터 저장함 (변수선언)
   data() {
     return {
+      // 스프레드를 이용하여 데이터의 사본을 만듦
+      originProduct: [...data],
+
       products,
       menus: ["Home", "Products", "About"],
       modalOpen: false,
@@ -57,7 +53,18 @@ export default {
     };
   },
   // 힘수저장함 (함수선언)
-  methods: {},
+  methods: {
+    // 가격순 정렬 함수 (자바스크립트)
+    priceSortClick() {
+      this.products.sort(function (a, b) {
+        return a.price - b.price;
+      });
+    },
+    // 정렬 되돌리기 (만들어 둔 원본 데이터를 이용 )
+    backSortClick() {
+      this.products = [...this.originProduct];
+    },
+  },
   components: {
     DiscountBanner: DiscountBanner,
     ModalWindow: ModalWindow,
@@ -135,14 +142,6 @@ div {
 .discount {
   background: #eee;
   padding: 10px;
-}
-
-.start {
-  opacity: 0;
-  transition: all 0.3s;
-}
-.end {
-  opacity: 1;
 }
 
 /* 입장 애니메이션 */
