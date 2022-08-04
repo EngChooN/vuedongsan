@@ -43,7 +43,7 @@ export default {
   // 데이터 저장함 (변수선언)
   data() {
     return {
-      // 스프레드를 이용하여 데이터의 사본을 만듦
+      // 스프레드를 이용하여 데이터의 사본을 만든다
       originProduct: [...data],
 
       products,
