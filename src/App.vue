@@ -8,16 +8,32 @@
       @openModal="modalOpen = $event"
     />
   </transition>
-
   <!-- 헤더 -->
   <div class="menu">
     <a v-for="(el, index) in menus" :key="index">{{ el }}</a>
   </div>
   <!-- 배너광고 -->
-  <DiscountBanner />
+  <DiscountBanner v-if="showDiscountValid === true" />
   <!-- 정렬버튼 -->
-  <button @click="priceSortClick">가격순</button>
-  <button @click="backSortClick">되돌리기</button>
+  <div class="btn-wrapper">
+    <button class="btn" @click="backSortClick">기본순</button>
+    <button class="btn" @click="textSortClick">가나다순</button>
+    <button class="btn" @click="priceSortLowClick">낮은가격순</button>
+    <button class="btn last" @click="priceSortHighClick">높은가격순</button>
+  </div>
+  <!-- 반응형 정렬버튼 -->
+  <div class="r-btn-wrapper">
+    <div class="r-box1">
+      <button class="r-btn margin" @click="backSortClick">기본순</button>
+      <button class="r-btn" @click="textSortClick">가나다순</button>
+    </div>
+    <div class="r-box2">
+      <button class="r-btn margin" @click="priceSortLowClick">
+        낮은가격순
+      </button>
+      <button class="r-btn" @click="priceSortHighClick">높은가격순</button>
+    </div>
+  </div>
   <!-- 상품리스트 -->
   <ProductCard
     v-for="(el, index) in products"
@@ -50,25 +66,43 @@ export default {
       menus: ["Home", "Products", "About"],
       modalOpen: false,
       clickValue: 0,
+      showDiscountValid: false,
     };
   },
   // 힘수저장함 (함수선언)
   methods: {
-    // 가격순 정렬 함수 (자바스크립트)
-    priceSortClick() {
+    // 낮은 가격순 정렬 함수 (자바스크립트)
+    priceSortLowClick() {
       this.products.sort(function (a, b) {
         return a.price - b.price;
+      });
+    },
+    // 높은 가격순 정렬 함수 (자바스크립트)
+    priceSortHighClick() {
+      this.products.sort(function (a, b) {
+        return b.price - a.price;
       });
     },
     // 정렬 되돌리기 (만들어 둔 원본 데이터를 이용 )
     backSortClick() {
       this.products = [...this.originProduct];
     },
+    // 가나다순 정렬
+    textSortClick() {
+      this.products.sort(function (a, b) {
+        return a.title.localeCompare(b.title);
+      });
+    },
   },
   components: {
     DiscountBanner: DiscountBanner,
     ModalWindow: ModalWindow,
     ProductCard: ProductCard,
+  },
+  mounted() {
+    setTimeout(() => {
+      this.showDiscountValid = true;
+    }, 2000);
   },
 };
 </script>
@@ -80,10 +114,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  width: 100%;
 }
 
 body {
   margin: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 div {
@@ -170,5 +208,81 @@ div {
 /* 끝 스타일 */
 .fade-leave-to {
   opacity: 0;
+}
+
+.btn-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  margin-top: 40px;
+  margin-right: 30px;
+  background: darkslateblue;
+  border: none;
+  color: white;
+  border-radius: 25px;
+  padding: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  max-width: 100px;
+}
+
+.last {
+  margin-right: 0px;
+}
+
+.r-btn-wrapper {
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.r-box01 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.r-box02 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.r-btn {
+  margin-top: 40px;
+  background: darkslateblue;
+  border: none;
+  color: white;
+  border-radius: 25px;
+  padding: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  max-width: 100px;
+}
+
+.margin {
+  margin-right: 30px;
+}
+
+@media screen and (max-width: 575px) {
+  .btn-wrapper {
+    flex-direction: column;
+    align-items: center;
+    display: none;
+  }
+
+  .btn {
+    margin-right: 0px;
+  }
+
+  .r-btn-wrapper {
+    display: flex;
+  }
 }
 </style>
