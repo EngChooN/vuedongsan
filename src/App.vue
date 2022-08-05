@@ -38,6 +38,7 @@
   <ProductCard
     v-for="(el, index) in products"
     :key="index"
+    :index="index"
     :el="el"
     :openModal="openModal"
     @openModal="

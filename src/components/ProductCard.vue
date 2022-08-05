@@ -2,7 +2,7 @@
   <!-- 상품리스트 -->
   <div>
     <img v-bind:src="el.image" class="room-img" />
-    <h4 @click="$emit('openModal', el.id)" class="product-name">
+    <h4 @click="$emit('openModal', index)" class="product-name">
       {{ el.title }}
     </h4>
     <p>{{ el.price }} ₩</p>
@@ -15,6 +15,7 @@ export default {
   props: {
     el: Array,
     openModal: Boolean,
+    index: Number,
   },
 };
 </script>

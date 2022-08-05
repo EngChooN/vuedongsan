@@ -58,6 +58,14 @@ export default {
   components: {
     DiscountBanner: DiscountBanner,
   },
+  updated() {
+    if (this.month == 2) {
+      alert(
+        "2를 입력 시, updated LifecycleHook이 동작하고 값은 1로 초기화 해줌!"
+      );
+      this.month = 1;
+    }
+  },
 };
 </script>
 
