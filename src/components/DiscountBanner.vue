@@ -17,7 +17,7 @@ export default {
     var timer = setInterval(() => {
       this.percent--;
       if (this.percent == 0) {
-        // timer라는 변수에 담아서 clearInterval 함수로 종료
+        // timer라는 변수에 담아서 clearInterval 함수로 종료!
         clearInterval(timer);
       }
     }, 1000);
